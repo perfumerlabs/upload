@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="upload" defaultIdMethod="native" namespace="Upload\Model">
+    <!-- Perfumer default model schemas -->
+    <!-- Perfumer default model schemas -->
+</database>

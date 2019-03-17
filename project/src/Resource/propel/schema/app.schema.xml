@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="upload" defaultIdMethod="native" namespace="Upload\Model">
+    <!-- Describe your application tables here -->
+    <table name="file" phpName="File">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="varchar" size="255"/>
+        <column name="extension" type="varchar" size="255"/>
+        <column name="digest" type="varchar" size="255" required="true"/>
+        <column name="is_image" type="boolean" required="true" defaultValue="true"/>
+        <column name="content_type" type="varchar" size="255" defaultValue="image/jpeg"/>
+        <column name="dir" type="varchar" size="255"/>
+        <column name="transform" type="longvarchar"/>
+        <column name="source_id" type="integer"/>
+        <column name="picked_at" type="timestamp"/>
+        <column name="compressed_at" type="timestamp"/>
+        <foreign-key foreignTable="file" phpName="Source">
+            <reference local="source_id" foreign="id"/>
+        </foreign-key>
+        <unique>
+            <unique-column name="digest"/>
+        </unique>
+        <behavior name="timestampable" />
+    </table>
+    <!-- Describe your application tables here -->
+</database>
