@@ -191,8 +191,8 @@ class FileTableMap extends TableMap
         $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
         $this->addColumn('extension', 'Extension', 'VARCHAR', false, 255, null);
         $this->addColumn('digest', 'Digest', 'VARCHAR', true, 255, null);
-        $this->addColumn('is_image', 'IsImage', 'BOOLEAN', true, null, true);
-        $this->addColumn('content_type', 'ContentType', 'VARCHAR', false, 255, 'image/jpeg');
+        $this->addColumn('is_image', 'IsImage', 'BOOLEAN', false, null, null);
+        $this->addColumn('content_type', 'ContentType', 'VARCHAR', false, 255, null);
         $this->addColumn('dir', 'Dir', 'VARCHAR', false, 255, null);
         $this->addColumn('transform', 'Transform', 'LONGVARCHAR', false, null, null);
         $this->addForeignKey('source_id', 'SourceId', 'INTEGER', 'file', 'id', false, null, null);

@@ -31,6 +31,7 @@ class CropController extends LayoutController
         $connection->beginTransaction();
 
         try {
+            $cropped->generateDigest($this->getContainer()->getParam('file/digest_length'));
             $cropped->save();
             $connection->commit();
         } catch (\Exception $e) {

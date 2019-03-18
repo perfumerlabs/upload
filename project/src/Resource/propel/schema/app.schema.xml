@@ -6,8 +6,8 @@
         <column name="name" type="varchar" size="255"/>
         <column name="extension" type="varchar" size="255"/>
         <column name="digest" type="varchar" size="255" required="true"/>
-        <column name="is_image" type="boolean" required="true" defaultValue="true"/>
-        <column name="content_type" type="varchar" size="255" defaultValue="image/jpeg"/>
+        <column name="is_image" type="boolean"/>
+        <column name="content_type" type="varchar" size="255"/>
         <column name="dir" type="varchar" size="255"/>
         <column name="transform" type="longvarchar"/>
         <column name="source_id" type="integer"/>

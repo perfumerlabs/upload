@@ -114,6 +114,7 @@ class Picture implements \Upload\Contract\Picture
                 unset($compressed);
             }
 
+            $source->setContentType('image/jpeg');
             $source->setCompressedAt(new \DateTime());
             $source->save();
         }

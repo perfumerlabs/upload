@@ -32,7 +32,7 @@ class ThumbnailController extends LayoutController
 
         $file = FileQuery::create()->findOneByDigest($digest);
 
-        if (!$file || !file_exists(FILES_DIR . $file->getPath()) || !$file->isImage()) {
+        if (!$file || (!file_exists(FILES_DIR . $file->getPath()) && $file->getPath()) || $file->isImage() === false) {
             $this->pageNotFoundException();
         }
 

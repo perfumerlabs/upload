@@ -12,6 +12,6 @@ return [
 
     'view.status' => [
         'class' => 'Upload\\Service\\View\\StatusView',
-        'arguments' => ['@host/upload', '@server/digest']
+        'arguments' => ['@host/upload', '@host/port', '@server/digest']
     ]
 ];

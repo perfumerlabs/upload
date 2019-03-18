@@ -37,6 +37,7 @@ class UploadController extends LayoutController
         $file->setExtension($upload->getExtension() ?: 'jpg');
         $file->setDir($target_dir);
         $file->setIsImage(true);
+        $file->setContentType($upload->getMimetype());
         $file->generateDigest($this->getContainer()->getParam('file/digest_length'));
 
         try {

@@ -40,6 +40,7 @@ sed -i "s/;catch_workers_output = yes/catch_workers_output = yes/g" /etc/php/7.1
 
 sed -i "s/'domain' => 'upload'/'domain' => '$UPLOAD_HOST'/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'upload' => 'http:\/\/upload'/'upload' => 'http:\/\/$UPLOAD_HOST'/g" /opt/upload/src/Resource/config/resources_shared.php
+sed -i "s/'port' => 80/'port' => $UPLOAD_PORT/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'digest' => ''/'digest' => '$UPLOAD_DIGEST_PREFIX'/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'max_size' => ''/'max_size' => '$UPLOAD_MAX_FILESIZE'/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'digest_length' => 10/'digest_length' => $UPLOAD_DIGEST_LENGTH/g" /opt/upload/src/Resource/config/resources_shared.php

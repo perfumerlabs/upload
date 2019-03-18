@@ -24,6 +24,7 @@ return [
 
     'host' => [
         'upload' => 'http://upload',
+        'port' => 80,
     ],
 
     'server'      => [

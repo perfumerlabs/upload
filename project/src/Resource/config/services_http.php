@@ -9,6 +9,8 @@ return [
                 $r->addRoute('POST', '/file', 'file/upload.post');
                 $r->addRoute('GET', '/image/{digest}', 'picture/thumbnail.get');
                 $r->addRoute('POST', '/image', 'picture/upload.post');
+                $r->addRoute('POST', '/image/{digest}/rotate', 'picture/rotate.post');
+                $r->addRoute('POST', '/image/{digest}/crop', 'picture/crop.post');
 
                 // Below routes are legacy
                 $r->addRoute('POST', '/picture/upload', 'picture/upload.post');

@@ -37,6 +37,10 @@ class File extends BaseFile
      */
     public function getPath()
     {
+        if (!$this->getDir()) {
+            return null;
+        }
+
         $path = $this->getDir() . '/' . $this->getDigest();
 
         if ($this->getExtension()) {

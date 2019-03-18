@@ -16,6 +16,11 @@ class StatusView extends SerializeView
     /**
      * @var string
      */
+    private $port;
+
+    /**
+     * @var string
+     */
     private $digest_prefix;
 
     /**
@@ -24,11 +29,12 @@ class StatusView extends SerializeView
      * @param string $host
      * @param string $digest_prefix
      */
-    public function __construct($host, $digest_prefix)
+    public function __construct($host, $port, $digest_prefix)
     {
         parent::__construct('json');
 
         $this->host = $host;
+        $this->port = $port;
         $this->digest_prefix = $digest_prefix;
 
         $this->addVars([
@@ -194,11 +200,17 @@ class StatusView extends SerializeView
      */
     public function setFile(File $file)
     {
-        $this->addVar('digest', $this->digest_prefix . $file->getDigest());
-        $this->addVar('download', $this->host . '/file/' . $this->digest_prefix . $file->getDigest());
+        if ($this->port == 80) {
+            $domain = $this->host;
+        } else {
+            $domain = $this->host . ':' . $this->port;
+        }
 
-        if ($file->isImage()) {
-            $this->addVar('thumbnail', $this->host . '/image/' . $this->digest_prefix . $file->getDigest());
+        $this->addVar('digest', $this->digest_prefix . $file->getDigest());
+        $this->addVar('download', $domain . '/file/' . $this->digest_prefix . $file->getDigest());
+
+        if ($file->isImage() !== false) {
+            $this->addVar('thumbnail', $domain . '/image/' . $this->digest_prefix . $file->getDigest());
         }
     }
 }

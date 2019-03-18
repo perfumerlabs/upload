@@ -57,6 +57,7 @@ RUN set -x\
     && sudo -u upload php composer.phar install --no-dev --prefer-dist
 
 ENV UPLOAD_HOST upload
+ENV UPLOAD_PORT 80
 ENV UPLOAD_MAX_FILESIZE 10M
 ENV UPLOAD_DIGEST_PREFIX abcde
 ENV UPLOAD_DIGEST_LENGTH 10
