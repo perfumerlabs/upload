@@ -11,7 +11,11 @@ class DownloadController extends LayoutController
     {
         $digest_prefix = $this->getContainer()->getParam('server/digest');
 
-        $digest = substr((string) $this->f('digest'), strlen($digest_prefix));
+        $digest = (string) $this->f('digest');
+
+        if ($digest_prefix) {
+            $digest = substr($digest, strlen($digest_prefix));
+        }
 
         $file = FileQuery::create()->findOneByDigest($digest);
 

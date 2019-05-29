@@ -12,7 +12,12 @@ class OriginalController extends LayoutController
     {
         /** @var Picture $picture */
         $picture = $this->s('picture');
-        $digest = substr((string) $this->f('digest'), 5);
+        $digest = (string) $this->f('digest');
+        $digest_prefix = $this->getContainer()->getParam('server/digest');
+
+        if ($digest_prefix) {
+            $digest = substr($digest, strlen($digest_prefix));
+        }
 
         if (!$file = FileQuery::create()->findOneByDigest($digest)) {
             if (!$digest = $this->getStubDigest()) {

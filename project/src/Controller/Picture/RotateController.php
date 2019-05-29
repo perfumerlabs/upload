@@ -15,12 +15,17 @@ class RotateController extends LayoutController
         /** @var Picture $picture */
         $picture = $this->s('picture');
         $degree  = (int) $this->f('degree');
+        $digest = (string) $this->f('digest');
 
         if (!$degree) {
             $degree  = (int) $this->f('d');
         }
 
-        $digest = substr((string) $this->f('digest'), 5);
+        $digest_prefix = $this->getContainer()->getParam('server/digest');
+
+        if ($digest_prefix) {
+            $digest = substr($digest, strlen($digest_prefix));
+        }
 
         if ($degree % 90 !== 0) {
             $this->setErrorMessageAndExit('Parameter "d" must be divisible by 90.');

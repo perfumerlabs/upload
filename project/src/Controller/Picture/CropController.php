@@ -16,7 +16,11 @@ class CropController extends LayoutController
             'x', 'y', 'w', 'h', 'digest',
         ]));
 
-        $digest = substr($digest, 5);
+        $digest_prefix = $this->getContainer()->getParam('server/digest');
+
+        if ($digest_prefix) {
+            $digest = substr($digest, strlen($digest_prefix));
+        }
 
         /** @var Picture $picture */
         $picture = $this->s('picture');

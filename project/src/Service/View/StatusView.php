@@ -209,6 +209,18 @@ class StatusView extends SerializeView
         $this->addVar('digest', $this->digest_prefix . $file->getDigest());
         $this->addVar('download', $domain . '/file/' . $this->digest_prefix . $file->getDigest());
 
+        if ($file->getName()) {
+            $this->addVar('name', $file->getName());
+        }
+
+        if ($file->getExtension()) {
+            $this->addVar('extension', $file->getExtension());
+        }
+
+        if ($file->getContentType()) {
+            $this->addVar('mimetype', $file->getContentType());
+        }
+
         if ($file->isImage() !== false) {
             $this->addVar('thumbnail', $domain . '/image/' . $this->digest_prefix . $file->getDigest());
         }
