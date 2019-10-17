@@ -206,6 +206,7 @@ class StatusView extends SerializeView
             $domain = $this->host . ':' . $this->port;
         }
 
+        $this->addVar('size', filesize(FILES_DIR . $file->getPath()));
         $this->addVar('digest', $this->digest_prefix . $file->getDigest());
         $this->addVar('download', $domain . '/file/' . $this->digest_prefix . $file->getDigest());
 

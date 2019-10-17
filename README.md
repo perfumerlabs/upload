@@ -9,7 +9,7 @@ docker run \
 -e UPLOAD_HOST=example.com \
 -v files:/opt/upload/files \
 -v postgresql:/var/lib/postgresql \
--d perfumerlabs/upload:v1.1.0
+-d perfumerlabs/upload:v1.3.0
 ```
 
 Environment variables
@@ -56,6 +56,7 @@ Response example:
     "digest": "abcdeAce4VKD2Wg",
     "name": "example",
     "extension": "txt",
+    "size": 123,
     "mimetype": "text/plain",
     "download": "http://example.com/file/abcdeAce4VKD2Wg"
 }
@@ -71,6 +72,29 @@ Example:
 GET /file/abcdeAce4VKD2Wg
 ```
 
+###### Get file info
+
+GET /file/{digest}/info - get a file info with the digest {digest}.
+
+Example:
+
+```
+GET /file/abcdeAce4VKD2Wg/info
+```
+
+Response example:
+
+```javascript
+{
+    "status": true,
+    "digest": "abcdeAce4VKD2Wg",
+    "name": "example",
+    "extension": "txt",
+    "size": 123,
+    "mimetype": "text/plain",
+    "download": "http://example.com/file/abcdeAce4VKD2Wg"
+}
+```
 
 ###### Upload an image
 
@@ -87,6 +111,7 @@ Response example:
     "name": "example",
     "extension": "jpg",
     "mimetype": "image/jpeg",
+    "size": 123,
     "download": "http://example.com/file/abcdeAce4VKD2Wg",
     "thumbnail": "http://example.com/image/abcdeAce4VKD2Wg"
 }

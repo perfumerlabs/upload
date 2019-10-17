@@ -6,6 +6,7 @@ return [
         'init' => function(\Perfumer\Component\Container\Container $container) {
             return \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
                 $r->addRoute('GET', '/file/{digest}', 'file/download.get');
+                $r->addRoute('GET', '/file/{digest}/info', 'file/info.get');
                 $r->addRoute('POST', '/file', 'file/upload.post');
                 $r->addRoute('GET', '/image/{digest}', 'picture/thumbnail.get');
                 $r->addRoute('POST', '/image', 'picture/upload.post');
