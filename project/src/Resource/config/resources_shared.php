@@ -33,6 +33,7 @@ return [
 
     'file' => [
         'max_size' => '',
+        'max_dimension' => '',
         'digest_length' => 10
     ]
 ];

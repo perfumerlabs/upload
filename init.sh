@@ -43,6 +43,7 @@ sed -i "s/'upload' => 'http:\/\/upload'/'upload' => 'http:\/\/$UPLOAD_HOST'/g" /
 sed -i "s/'port' => 80/'port' => $UPLOAD_PORT/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'digest' => ''/'digest' => '$UPLOAD_DIGEST_PREFIX'/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'max_size' => ''/'max_size' => '$UPLOAD_MAX_FILESIZE'/g" /opt/upload/src/Resource/config/resources_shared.php
+sed -i "s/'max_dimension' => ''/'max_dimension' => $UPLOAD_MAX_DIMENSION/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'digest_length' => 10/'digest_length' => $UPLOAD_DIGEST_LENGTH/g" /opt/upload/src/Resource/config/resources_shared.php
 
 set -x \

@@ -15,9 +15,12 @@ class Picture implements \Upload\Contract\Picture
      */
     private $imagick;
 
-    public function __construct(Imagine $imagick)
+    private $max_dimension = 1000;
+
+    public function __construct(Imagine $imagick, $max_dimension)
     {
         $this->imagick = $imagick;
+        $this->max_dimension = $max_dimension;
     }
 
     public function rotate(File $file, $degree)
@@ -100,10 +103,10 @@ class Picture implements \Upload\Contract\Picture
         $size = getimagesize($source_path);
 
         if ($source->getCompressedAt() === null) {
-            if ($size[0] > 1000 || $size[1] > 1000) {
+            if ($size[0] > $this->max_dimension || $size[1] > $this->max_dimension) {
                 $compressed = $this->imagick
                     ->open($source_path)
-                    ->thumbnail(new Box(1000, 1000), ImageInterface::THUMBNAIL_INSET);
+                    ->thumbnail(new Box($this->max_dimension, $this->max_dimension), ImageInterface::THUMBNAIL_INSET);
 
                 @unlink($source_path);
 

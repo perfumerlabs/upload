@@ -7,7 +7,7 @@ return [
 
     'picture' => [
         'class' => 'Upload\\Service\\Picture',
-        'arguments' => ['#imagick']
+        'arguments' => ['#imagick', '@file/max_dimension']
     ],
 
     'view.status' => [

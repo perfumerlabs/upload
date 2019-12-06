@@ -9,7 +9,7 @@ docker run \
 -e UPLOAD_HOST=example.com \
 -v files:/opt/upload/files \
 -v postgresql:/var/lib/postgresql \
--d perfumerlabs/upload:v1.3.0
+-d perfumerlabs/upload:v1.4.0
 ```
 
 Environment variables
@@ -18,6 +18,7 @@ Environment variables
 - UPLOAD_HOST - server domain (without http://). Required.
 - UPLOAD_PORT - exposed port of host, to set correct download urls in the response. Optional. The default value is 80.
 - UPLOAD_MAX_FILESIZE - maximum allowed size of file. Optional. The default value is 10M.
+- UPLOAD_MAX_DIMENSION - maximum allowed dimension of image. Optional. The default value is 1000. If image is more than this value, uploader will resize the image.
 - UPLOAD_DIGEST_PREFIX - after every file is uploaded, a unique identificator, called "digest", is returned in response (for example, "abcdeAce4VKD2Wg"), UPLOAD_DIGEST_PREFIX (in the example "abcde") will be set at the beginning of the digest. If you have multiple upload servers this prefix will help to determine which server preserved a file. Optional.
 - UPLOAD_DIGEST_LENGTH - length of the meaningful part of the digest (without UPLOAD_DIGEST_PREFIX). Optional. The default value is 10.
 - PHP_MAX_EXECUTION_TIME - max_execution_time option in php.ini. Optional. The default value is 60.
