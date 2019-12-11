@@ -11,6 +11,7 @@ class ThumbnailController extends LayoutController
     public function get()
     {
         $digest_prefix = $this->getContainer()->getParam('server/digest');
+        $max_dimension = $this->getContainer()->getParam('file/max_dimension');
 
         $digest = (string) $this->f('digest');
 
@@ -24,11 +25,11 @@ class ThumbnailController extends LayoutController
         $height = (int)    $this->f('h');
         $mode   = (string) $this->f('m');
 
-        $width = min(1000, $width);
-        $width = max(0, $width) ?: 1000;
+        $width = min($max_dimension, $width);
+        $width = max(0, $width) ?: $max_dimension;
 
-        $height = min(1000, $height);
-        $height = max(0, $height) ?: 1000;
+        $height = min($max_dimension, $height);
+        $height = max(0, $height) ?: $max_dimension;
 
         if (!in_array($mode, ['r', 'c'])) {
             $mode = 'r';
