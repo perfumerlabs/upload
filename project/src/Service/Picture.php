@@ -69,7 +69,15 @@ class Picture implements \Upload\Contract\Picture
         $source = $file->getSourceId() ? $file->getSource() : $file;
 
         $source_path      = FILES_DIR . $source->getPath();
-        $picture_dir      = 'thumbnail/v1/' . implode('/', str_split($file->getDigest(), 2));
+
+        $first = $file->getDigest()[0];
+        $second = $file->getDigest()[1];
+        $third = $file->getDigest()[2] . $file->getDigest()[3];
+        $fourth = $file->getDigest()[4] . $file->getDigest()[5];
+        $rest = substr($file->getDigest(), 6);
+
+        $picture_dir      = "cache/$first/$second/$third/$fourth/$rest";
+
         $picture_web_path = "{$picture_dir}/original.{$source->getExtension()}";
         $picture_path     = WEB_DIR . $picture_web_path;
 
@@ -92,7 +100,14 @@ class Picture implements \Upload\Contract\Picture
 
         $source_path        = FILES_DIR . $source->getPath();
         $thumbnail_mode     = ($m == 'r') ? ImageInterface::THUMBNAIL_INSET : ImageInterface::THUMBNAIL_OUTBOUND;
-        $thumbnail_dir      = 'thumbnail/v1/' . implode('/', str_split($file->getDigest(), 2));
+
+        $first = $file->getDigest()[0];
+        $second = $file->getDigest()[1];
+        $third = $file->getDigest()[2] . $file->getDigest()[3];
+        $fourth = $file->getDigest()[4] . $file->getDigest()[5];
+        $rest = substr($file->getDigest(), 6);
+
+        $thumbnail_dir      = "cache/$first/$second/$third/$fourth/$rest";
         $thumbnail_web_path = "{$thumbnail_dir}/{$m}.{$w}.{$h}.jpg";
         $thumbnail_path     = WEB_DIR . $thumbnail_web_path;
 

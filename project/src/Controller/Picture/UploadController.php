@@ -42,7 +42,13 @@ class UploadController extends LayoutController
 
         try {
             if ($file->save()) {
-                $upload->upload($file->getDigest() . '.' . $file->getExtension());
+                $file_name = $file->getDigest();
+
+                if ($file->getExtension()) {
+                    $file_name .= '.' . $file->getExtension();
+                }
+
+                $upload->upload($file_name);
 
                 /** @var Imagine $imagick */
                 $imagick = $this->s('imagick');

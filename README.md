@@ -8,8 +8,9 @@ docker run \
 -p 80:80/tcp \
 -e UPLOAD_HOST=example.com \
 -v files:/opt/upload/files \
+-v cache:/opt/upload/web/cache \
 -v postgresql:/var/lib/postgresql \
--d perfumerlabs/upload:v1.4.0
+-d perfumerlabs/upload:v1.5.0
 ```
 
 Environment variables
@@ -20,14 +21,17 @@ Environment variables
 - UPLOAD_MAX_FILESIZE - maximum allowed size of file. Optional. The default value is 10M.
 - UPLOAD_MAX_DIMENSION - maximum allowed dimension of image. Optional. The default value is 1000. If image is more than this value, uploader will resize the image.
 - UPLOAD_DIGEST_PREFIX - after every file is uploaded, a unique identificator, called "digest", is returned in response (for example, "abcdeAce4VKD2Wg"), UPLOAD_DIGEST_PREFIX (in the example "abcde") will be set at the beginning of the digest. If you have multiple upload servers this prefix will help to determine which server preserved a file. Optional.
-- UPLOAD_DIGEST_LENGTH - length of the meaningful part of the digest (without UPLOAD_DIGEST_PREFIX). Optional. The default value is 10.
+- UPLOAD_DIGEST_LENGTH - length of the meaningful part of the digest (without UPLOAD_DIGEST_PREFIX). Optional. The default and minimum allowed value is 10.
 - PHP_MAX_EXECUTION_TIME - max_execution_time option in php.ini. Optional. The default value is 60.
 - PHP_MEMORY_LIMIT - memory_limit option in php.ini. Optional. The default value is 512M.
+- PHP_PM_MAX_CHILDREN - number of FPM workers. Default value is 10.
+- PHP_PM_MAX_REQUESTS - number of FPM max requests. Default value is 500.
 
 Volumes
 =======
 
 - /opt/upload/files - directory with all uploaded files.
+- /opt/upload/web/cache - directory with cached thumbnails.
 - /var/lib/postgresql - PostgreSQL data directory.
 
 If you want to make any additional configuration of container, mount your bash script to /opt/setup.sh. This script will be executed on container setup.
@@ -37,8 +41,8 @@ Software
 
 1. Ubuntu 16.04 Xenial
 2. PostgreSQL 9.6
-3. Nginx 1.14
-4. PHP 7.1
+3. Nginx 1.16
+4. PHP 7.3
 
 API Reference
 =============

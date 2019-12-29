@@ -19,18 +19,17 @@ RUN set -x \
         nginx \
         php-igbinary \
         php-imagick \
-        php-xml \
-        php7.1 \
-        php7.1-cli \
-        php7.1-common \
-        php7.1-curl \
-        php7.1-fpm \
-        php7.1-json \
-        php7.1-mbstring \
-        php7.1-opcache \
-        php7.1-pgsql \
-        php7.1-readline \
-        php7.1-xml \
+        php7.3 \
+        php7.3-cli \
+        php7.3-common \
+        php7.3-curl \
+        php7.3-fpm \
+        php7.3-json \
+        php7.3-mbstring \
+        php7.3-opcache \
+        php7.3-pgsql \
+        php7.3-readline \
+        php7.3-xml \
         supervisor \
         vim \
         curl \
@@ -49,9 +48,9 @@ RUN set -x\
     && chmod +x /usr/local/bin/entrypoint.sh \
     && chmod +x /usr/local/bin/init.sh \
     && mkdir -p /opt/upload/files \
-    && mkdir -p /opt/upload/web/thumbnail \
+    && mkdir -p /opt/upload/web/cache \
     && chmod 777 /opt/upload/files \
-    && chmod 777 /opt/upload/web/thumbnail \
+    && chmod 777 /opt/upload/web/cache \
     && chown -R upload:upload /opt/upload \
     && cd /opt/upload \
     && sudo -u upload php composer.phar install --no-dev --prefer-dist
@@ -64,9 +63,12 @@ ENV UPLOAD_DIGEST_PREFIX ''
 ENV UPLOAD_DIGEST_LENGTH 10
 ENV PHP_MAX_EXECUTION_TIME 60
 ENV PHP_MEMORY_LIMIT 512M
+ENV PHP_PM_MAX_CHILDREN 10
+ENV PHP_PM_MAX_REQUESTS 500
 
 VOLUME /var/lib/postgresql
 VOLUME /opt/upload/files
+VOLUME /opt/upload/web/cache
 
 EXPOSE 80
 
