@@ -13,5 +13,11 @@ return [
     'view.status' => [
         'class' => 'Upload\\Service\\View\\StatusView',
         'arguments' => ['@host/upload', '@host/port', '@server/digest']
-    ]
+    ],
+
+    'gateway' => [
+        'shared' => true,
+        'class' => 'Upload\\Gateway',
+        'arguments' => ['#application', '#gateway.http', '#gateway.console']
+    ],
 ];

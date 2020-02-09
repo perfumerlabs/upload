@@ -9,13 +9,6 @@ set -x \
 && cp -r "/usr/share/container_config/nginx" /etc/nginx \
 && cp -r "/usr/share/container_config/supervisor" /etc/supervisor
 
-sed -i "s/local   all             postgres                                peer/local   all             postgres                                trust/g" /etc/postgresql/9.6/main/pg_hba.conf
-
-set -x \
-&& service postgresql restart \
-&& psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'upload'" | grep -q 1 || psql -U postgres -c "CREATE DATABASE upload" \
-&& sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
-
 sed -i "s/__UPLOAD_MAX_DIMENSION__/$UPLOAD_MAX_DIMENSION/g" /etc/nginx/nginx.conf
 sed -i "s/__UPLOAD_HOST__/$UPLOAD_HOST/g" /etc/nginx/sites/upload.conf
 sed -i "s/__UPLOAD_DIGEST_PREFIX__/$UPLOAD_DIGEST_PREFIX/g" /etc/nginx/sites/upload.conf
@@ -40,7 +33,14 @@ sed -i "s/listen.owner = www-data/listen.owner = upload/g" /etc/php/7.3/fpm/pool
 sed -i "s/listen.group = www-data/listen.group = upload/g" /etc/php/7.3/fpm/pool.d/www.conf
 sed -i "s/;catch_workers_output = yes/catch_workers_output = yes/g" /etc/php/7.3/fpm/pool.d/www.conf
 
-sed -i "s/'domain' => 'upload'/'domain' => '$UPLOAD_HOST'/g" /opt/upload/src/Resource/config/resources_shared.php
+sed -i "s/pgsql:host=postgresql;port=5432;dbname=upload/pgsql:host=$PG_HOST;port=$PG_PORT;dbname=$PG_DATABASE/g" /opt/upload/src/Resource/propel/connection/propel.php
+sed -i "s/'user' => 'postgres'/'user' => '$PG_USER'/g" /opt/upload/src/Resource/propel/connection/propel.php
+sed -i "s/'password' => 'postgres'/'password' => '$PG_PASSWORD'/g" /opt/upload/src/Resource/propel/connection/propel.php
+sed -i "s/pgsql:host=postgresql;port=5432;dbname=upload/pgsql:host=$PG_HOST;port=$PG_PORT;dbname=$PG_DATABASE/g" /opt/upload/src/Resource/config/resources_shared.php
+sed -i "s/'db_user' => 'postgres',/'db_user' => '$PG_USER',/g" /opt/upload/src/Resource/config/resources_shared.php
+sed -i "s/'db_password' => 'postgres',/'db_password' => '$PG_PASSWORD',/g" /opt/upload/src/Resource/config/resources_shared.php
+
+sed -i "s/'upload', 'upload', null, 'http'/'upload', '$UPLOAD_HOST', null, 'http'/g" /opt/upload/src/Gateway.php
 sed -i "s/'upload' => 'http:\/\/upload'/'upload' => 'http:\/\/$UPLOAD_HOST'/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'port' => 80/'port' => $UPLOAD_PORT/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/'digest' => ''/'digest' => '$UPLOAD_DIGEST_PREFIX'/g" /opt/upload/src/Resource/config/resources_shared.php
