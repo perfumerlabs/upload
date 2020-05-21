@@ -10,8 +10,33 @@ class DownloadController extends LayoutController
     public function get()
     {
         $digest_prefix = $this->getContainer()->getParam('server/digest');
-
+        $auth = $this->getContainer()->getParam('server/auth');
+        $auth_salt = $this->getContainer()->getParam('server/auth_salt');
         $digest = (string) $this->f('digest');
+
+        if ($auth === 'true') {
+            $timestamp = (int) $this->f('timestamp');
+            $expire = (int) $this->f('expire');
+            $hash = (string) $this->f('hash');
+
+            if (!$timestamp) {
+                $this->pageNotFoundException();
+            }
+
+            if (!$expire) {
+                $this->pageNotFoundException();
+            }
+
+            if (time() > $timestamp + $expire) {
+                $this->pageNotFoundException();
+            }
+
+            $hash_string = hash('sha256', $auth_salt . $digest . $timestamp . $expire);
+
+            if ($hash_string !== $hash) {
+                $this->pageNotFoundException();
+            }
+        }
 
         if ($digest_prefix) {
             $digest = substr($digest, strlen($digest_prefix));

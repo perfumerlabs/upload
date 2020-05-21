@@ -29,6 +29,8 @@ return [
 
     'server'      => [
         'digest' => '',
+        'auth' => '',
+        'auth_salt' => '',
     ],
 
     'file' => [
