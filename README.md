@@ -20,7 +20,7 @@ docker run \
 -e PG_PASSWORD=password \
 -v files:/opt/upload/files \
 -v cache:/opt/upload/web/cache \
--d perfumerlabs/upload:v2.0.0
+-d perfumerlabs/upload:v2.1.0
 ```
 
 Database must be created before container startup.
@@ -34,6 +34,8 @@ Environment variables
 - UPLOAD_MAX_DIMENSION - maximum allowed dimension of image. Optional. The default value is 1000. If image is more than this value, uploader will resize the image.
 - UPLOAD_DIGEST_PREFIX - after every file is uploaded, a unique identificator, called "digest", is returned in response (for example, "abcdeAce4VKD2Wg"), UPLOAD_DIGEST_PREFIX (in the example "abcde") will be set at the beginning of the digest. If you have multiple upload servers this prefix will help to determine which server preserved a file. Optional.
 - UPLOAD_DIGEST_LENGTH - length of the meaningful part of the digest (without UPLOAD_DIGEST_PREFIX). Optional. The default and minimum allowed value is 10.
+- UPLOAD_AUTH - File download authentication (see below). The default value is false.
+- UPLOAD_AUTH_SALT - File download authentication salt (see below). The default value is false.
 - PHP_MAX_EXECUTION_TIME - max_execution_time option in php.ini. Optional. The default value is 60.
 - PHP_MEMORY_LIMIT - memory_limit option in php.ini. Optional. The default value is 512M.
 - PHP_PM_MAX_CHILDREN - number of FPM workers. Default value is 10.
