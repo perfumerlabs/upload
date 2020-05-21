@@ -2,18 +2,21 @@ FROM ubuntu:xenial
 
 MAINTAINER Ilyas Makashev <mehmatovec@gmail.com>
 
+COPY init.sh /usr/local/bin/init.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY nginx /usr/share/container_config/nginx
+COPY supervisor /usr/share/container_config/supervisor
+COPY project /opt/upload
+
 RUN set -x \
-    && apt-get update && apt-get install -y --no-install-recommends ca-certificates wget locales && rm -rf /var/lib/apt/lists/* \
+    && apt-get update && apt-get install -y --no-install-recommends curl gnupg2 ca-certificates wget locales && rm -rf /var/lib/apt/lists/* \
     && useradd -s /bin/bash -m upload \
     && echo "deb http://nginx.org/packages/ubuntu/ xenial nginx" > /etc/apt/sources.list.d/nginx.list \
     && echo "deb-src http://nginx.org/packages/ubuntu/ xenial nginx" >> /etc/apt/sources.list.d/nginx.list \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt/sources.list.d/php.list \
     && echo "deb-src http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" >> /etc/apt/sources.list.d/php.list \
-    && echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > /etc/apt/sources.list.d/postgresql.list \
-    && echo "deb-src http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" >> /etc/apt/sources.list.d/postgresql.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ABF5BD827BD9BF62 \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C \
-    && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
     && apt update \
     && apt install -y \
         nginx \
@@ -32,19 +35,9 @@ RUN set -x \
         php7.3-xml \
         supervisor \
         vim \
-        curl \
-        postgresql-9.6 \
         git \
         zip \
-        sudo
-
-COPY init.sh /usr/local/bin/init.sh
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY nginx /usr/share/container_config/nginx
-COPY supervisor /usr/share/container_config/supervisor
-COPY project /opt/upload
-
-RUN set -x\
+        sudo \
     && chmod +x /usr/local/bin/entrypoint.sh \
     && chmod +x /usr/local/bin/init.sh \
     && mkdir -p /opt/upload/files \
@@ -55,6 +48,11 @@ RUN set -x\
     && cd /opt/upload \
     && sudo -u upload php composer.phar install --no-dev --prefer-dist
 
+ENV PG_HOST postgresql
+ENV PG_PORT 5432
+ENV PG_DATABASE upload
+ENV PG_USER postgres
+ENV PG_PASSWORD postgres
 ENV UPLOAD_HOST upload
 ENV UPLOAD_PORT 80
 ENV UPLOAD_MAX_FILESIZE 10M
@@ -68,7 +66,6 @@ ENV PHP_MEMORY_LIMIT 512M
 ENV PHP_PM_MAX_CHILDREN 10
 ENV PHP_PM_MAX_REQUESTS 500
 
-VOLUME /var/lib/postgresql
 VOLUME /opt/upload/files
 VOLUME /opt/upload/web/cache
 

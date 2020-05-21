@@ -1,4 +1,11 @@
-Ready-to-use docker microservice for file uploading. Resize, rotate, crop API. Imagemagick is used for image manipulation.
+BACKWARD COMPATIBILITY BREAK with version 1.x!
+PostgreSQL was removed from the container, make sure to migrate your database to any external PostgreSQL instance.
+
+What is it
+===========
+
+This is ready-to-use docker microservice for file uploading. Resize, rotate, crop API. 
+Imagemagick is used for image manipulation.
 
 Installation
 ============
@@ -7,11 +14,16 @@ Installation
 docker run \
 -p 80:80/tcp \
 -e UPLOAD_HOST=example.com \
+-e PG_HOST=postgresql \
+-e PG_DATABASE=database \
+-e PG_USER=user \
+-e PG_PASSWORD=password \
 -v files:/opt/upload/files \
 -v cache:/opt/upload/web/cache \
--v postgresql:/var/lib/postgresql \
--d perfumerlabs/upload:v1.5.0
+-d perfumerlabs/upload:v2.0.0
 ```
+
+Database must be created before container startup.
 
 Environment variables
 =====================
@@ -26,13 +38,17 @@ Environment variables
 - PHP_MEMORY_LIMIT - memory_limit option in php.ini. Optional. The default value is 512M.
 - PHP_PM_MAX_CHILDREN - number of FPM workers. Default value is 10.
 - PHP_PM_MAX_REQUESTS - number of FPM max requests. Default value is 500.
+- PG_HOST - PostgreSQL host. Required.
+- PG_PORT - PostgreSQL port. Default value is 5432.
+- PG_DATABASE - PostgreSQL database name. Required.
+- PG_USER - PostgreSQL user name. Required.
+- PG_PASSWORD - PostgreSQL user password. Required.
 
 Volumes
 =======
 
 - /opt/upload/files - directory with all uploaded files.
 - /opt/upload/web/cache - directory with cached thumbnails.
-- /var/lib/postgresql - PostgreSQL data directory.
 
 If you want to make any additional configuration of container, mount your bash script to /opt/setup.sh. This script will be executed on container setup.
 
@@ -40,8 +56,7 @@ Software
 ========
 
 1. Ubuntu 16.04 Xenial
-2. PostgreSQL 9.6
-3. Nginx 1.16
+3. Nginx 1.14
 4. PHP 7.3
 
 API Reference

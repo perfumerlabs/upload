@@ -6,7 +6,7 @@ return [
             'connections' => [
                 'upload' => [
                     'adapter' => 'pgsql',
-                    'dsn' => 'pgsql:host=localhost;port=5432;dbname=upload',
+                    'dsn' => 'pgsql:host=postgresql;port=5432;dbname=upload',
                     'user' => 'postgres',
                     'password' => 'postgres',
                     'settings' => [
