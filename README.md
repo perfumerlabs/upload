@@ -216,5 +216,5 @@ Software
 ========
 
 1. Ubuntu 16.04 Xenial
-3. Nginx 1.14
+3. Nginx 1.16
 4. PHP 7.4
