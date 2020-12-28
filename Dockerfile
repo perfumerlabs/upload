@@ -1,6 +1,6 @@
 FROM ubuntu:xenial
 
-MAINTAINER Ilyas Makashev <mehmatovec@gmail.com>
+LABEL authors="Ilyas Makashev mehmatovec@gmail.com"
 
 COPY init.sh /usr/local/bin/init.sh
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -22,17 +22,17 @@ RUN set -x \
         nginx \
         php-igbinary \
         php-imagick \
-        php7.3 \
-        php7.3-cli \
-        php7.3-common \
-        php7.3-curl \
-        php7.3-fpm \
-        php7.3-json \
-        php7.3-mbstring \
-        php7.3-opcache \
-        php7.3-pgsql \
-        php7.3-readline \
-        php7.3-xml \
+        php7.4 \
+        php7.4-cli \
+        php7.4-common \
+        php7.4-curl \
+        php7.4-fpm \
+        php7.4-json \
+        php7.4-mbstring \
+        php7.4-opcache \
+        php7.4-pgsql \
+        php7.4-readline \
+        php7.4-xml \
         supervisor \
         vim \
         git \

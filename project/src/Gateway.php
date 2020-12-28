@@ -8,6 +8,6 @@ class Gateway extends CompositeGateway
 {
     protected function configure(): void
     {
-        $this->addBundle('upload', 'upload', null, 'http');
+        $this->addModule('upload', null, null, 'http');
     }
 }
