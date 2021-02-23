@@ -43,7 +43,6 @@ class ThumbnailController extends LayoutController
 
         try {
             $thumb_path = $picture->thumbnail($file, $width, $height, $mode);
-
             $content_type = 'image/jpeg';
 
             if ($file->getExtension() === 'svg') {

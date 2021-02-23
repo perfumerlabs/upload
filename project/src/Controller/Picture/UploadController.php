@@ -56,7 +56,6 @@ class UploadController extends LayoutController
                 if ($file->getExtension() !== 'svg') {
                     // проверяем изображение ли это
                     $image = $imagick->open(FILES_DIR . $file->getPath());
-
                     $this->autoRotateImage($image);
                     $image->save();
                 }

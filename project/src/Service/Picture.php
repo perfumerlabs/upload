@@ -217,6 +217,7 @@ class Picture implements \Upload\Contract\Picture
             } else {
                 throw new \Exception("viewBox is dependent on environment");
             }
+
         }
 
         $svg->setAttribute('width', $w);
