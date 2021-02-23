@@ -108,8 +108,13 @@ class Picture implements \Upload\Contract\Picture
         $rest = substr($file->getDigest(), 6);
 
         $thumbnail_dir      = "cache/$first/$second/$third/$fourth/$rest";
-        $thumbnail_web_path = "{$thumbnail_dir}/{$m}.{$w}.{$h}.jpg";
+        $thumbnail_web_path = "{$thumbnail_dir}/{$m}.{$w}.{$h}.{$file->getExtension()}";
         $thumbnail_path     = WEB_DIR . $thumbnail_web_path;
+
+        if ($file->getExtension() === 'svg') {
+            @mkdir(WEB_DIR . $thumbnail_dir, 0777, true);
+            $this->resizeSvg($source_path, $thumbnail_path, $w, $h);
+        }
 
         if (file_exists($thumbnail_path)) {
             return '/' . $thumbnail_web_path;
@@ -192,5 +197,30 @@ class Picture implements \Upload\Contract\Picture
         $box   = new Box($w, $h);
         
         return $image->crop($point, $box);
+    }
+
+    private function resizeSvg(string $from, string $to, int $w, int $h): void
+    {
+        $dom = new \DOMDocument('1.0', 'utf-8');
+        $dom->load($from);
+        $svg = $dom->documentElement;
+
+        if (!$svg->hasAttribute('viewBox')) {
+            $pattern = '/^(\d*\.\d+|\d+)(px)?$/';
+
+            $interpretable = preg_match($pattern, $svg->getAttribute('width'), $width)
+                && preg_match($pattern, $svg->getAttribute('height'), $height);
+
+            if ($interpretable) {
+                $view_box = implode(' ', [0, 0, $width[0], $height[0]]);
+                $svg->setAttribute('viewBox', $view_box);
+            } else {
+                throw new \Exception("viewBox is dependent on environment");
+            }
+        }
+
+        $svg->setAttribute('width', $w);
+        $svg->setAttribute('height', $h);
+        $dom->save($to);
     }
 }

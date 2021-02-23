@@ -44,8 +44,14 @@ class ThumbnailController extends LayoutController
         try {
             $thumb_path = $picture->thumbnail($file, $width, $height, $mode);
 
+            $content_type = 'image/jpeg';
+
+            if ($file->getExtension() === 'svg') {
+                $content_type = 'image/svg+xml';
+            }
+
             $this->getExternalResponse()->headers->set('X-Accel-Redirect', $thumb_path);
-            $this->getExternalResponse()->headers->set('Content-Type', 'image/jpeg');
+            $this->getExternalResponse()->headers->set('Content-Type', $content_type);
             $this->getExternalResponse()->headers->set('Cache-Control', 'public');
         } catch (\Exception $e) {
             $this->pageNotFoundException();
