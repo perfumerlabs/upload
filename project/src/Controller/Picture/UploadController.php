@@ -65,11 +65,15 @@ class UploadController extends LayoutController
                 $this->setErrorMessage('Unable to save the file');
             }
         } catch (RuntimeException $e) {
+            error_log($e->getMessage());
+
             // файл не изображение, выпиливаем из хранилища
             @unlink(FILES_DIR . $file->getPath());
             $file->delete();
             $this->setErrorMessageAndExit('Invalid image');
         } catch (\Exception $e) {
+            error_log($e->getMessage());
+
             $file->delete();
             $this->setErrorMessageAndExit($upload->getErrors()[0]);
         }
