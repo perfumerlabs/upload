@@ -20,7 +20,7 @@ docker run \
 -e PG_PASSWORD=password \
 -v files:/opt/upload/files \
 -v cache:/opt/upload/web/cache \
--d perfumerlabs/upload:v2.2.0
+-d perfumerlabs/upload:v2.3.0
 ```
 
 Database must be created before container startup.

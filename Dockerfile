@@ -21,7 +21,7 @@ RUN set -x \
     && apt install -y \
         nginx \
         php-igbinary \
-        php-imagick \
+        php7.4-imagick \
         php7.4 \
         php7.4-cli \
         php7.4-common \
