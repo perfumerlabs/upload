@@ -24,7 +24,7 @@ class UploadController extends LayoutController
         $upload = new FileUpload('file', $storage);
 
         $upload->addValidations([
-            new Mimetype(['image/jpeg', 'image/png', 'image/gif']),
+            new Mimetype(['image/jpeg', 'image/png', 'image/gif', 'image/svg']),
             new Size($this->getContainer()->getParam('file/max_size')),
         ]);
 
@@ -53,11 +53,12 @@ class UploadController extends LayoutController
                 /** @var Imagine $imagick */
                 $imagick = $this->s('imagick');
 
-                // проверяем изображение ли это
-                $image = $imagick->open(FILES_DIR . $file->getPath());
-
-                $this->autoRotateImage($image);
-                $image->save();
+                if ($file->getContentType() !== 'image/svg') {
+                    // проверяем изображение ли это
+                    $image = $imagick->open(FILES_DIR . $file->getPath());
+                    $this->autoRotateImage($image);
+                    $image->save();
+                }
 
                 $this->setFile($file);
             } else {
