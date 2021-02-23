@@ -35,6 +35,11 @@ class RotateController extends LayoutController
             $this->setErrorMessageAndExit('file not found');
         }
 
+        // if extension is svg return error message
+        if ($file->getContentType() === 'image/svg') {
+            $this->setErrorMessageAndExit("file has \"svg\" extension");
+        }
+
         $rotated = $picture->rotate($file, $degree);
 
         $connection = Propel::getWriteConnection(FileTableMap::DATABASE_NAME);

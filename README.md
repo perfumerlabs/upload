@@ -12,6 +12,7 @@ Installation
 
 ```bash
 docker run \
+-p 80:80/tcp \
 -e UPLOAD_HOST=example.com \
 -e PG_HOST=postgresql \
 -e PG_DATABASE=database \

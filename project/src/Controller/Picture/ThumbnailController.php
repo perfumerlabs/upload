@@ -45,8 +45,10 @@ class ThumbnailController extends LayoutController
             $thumb_path = $picture->thumbnail($file, $width, $height, $mode);
             $content_type = 'image/jpeg';
 
-            if ($file->getExtension() === 'svg') {
+            if ($file->getContentType() === 'image/svg') {
                 $content_type = 'image/svg+xml';
+            } elseif ($file->getContentType() === 'image/png') {
+                $content_type = 'image/png';
             }
 
             $this->getExternalResponse()->headers->set('X-Accel-Redirect', $thumb_path);

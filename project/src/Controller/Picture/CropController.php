@@ -29,6 +29,11 @@ class CropController extends LayoutController
             $this->setErrorMessageAndExit("file not found| {$digest}");
         }
 
+        // if extension is svg return error message
+        if ($file->getContentType() === 'image/svg') {
+            $this->setErrorMessageAndExit("file has \"svg\" extension");
+        }
+
         $cropped = $picture->crop($file, $crop_x, $crop_y, $width, $height);
 
         $connection = Propel::getWriteConnection(FileTableMap::DATABASE_NAME);

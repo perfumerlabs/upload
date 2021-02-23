@@ -53,7 +53,7 @@ class UploadController extends LayoutController
                 /** @var Imagine $imagick */
                 $imagick = $this->s('imagick');
 
-                if ($file->getExtension() !== 'svg') {
+                if ($file->getContentType() !== 'image/svg') {
                     // проверяем изображение ли это
                     $image = $imagick->open(FILES_DIR . $file->getPath());
                     $this->autoRotateImage($image);
