@@ -40,11 +40,13 @@ sed -i "s/;catch_workers_output = yes/catch_workers_output = yes/g" /etc/php/7.4
 sed -i "s/PG_HOST/$PG_HOST_SED/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/PG_PORT/$PG_PORT/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/PG_DATABASE/$PG_DATABASE/g" /opt/upload/src/Resource/config/resources_shared.php
+sed -i "s/PG_SCHEMA/$PG_SCHEMA/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/PG_USER/$PG_USER/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/PG_PASSWORD/$PG_PASSWORD_SED/g" /opt/upload/src/Resource/config/resources_shared.php
 sed -i "s/PG_HOST/$PG_HOST_SED/g" /opt/upload/src/Resource/propel/connection/propel.php
 sed -i "s/PG_PORT/$PG_PORT/g" /opt/upload/src/Resource/propel/connection/propel.php
 sed -i "s/PG_DATABASE/$PG_DATABASE/g" /opt/upload/src/Resource/propel/connection/propel.php
+sed -i "s/PG_SCHEMA/$PG_SCHEMA/g" /opt/upload/src/Resource/propel/connection/propel.php
 sed -i "s/PG_USER/$PG_USER/g" /opt/upload/src/Resource/propel/connection/propel.php
 sed -i "s/PG_PASSWORD/$PG_PASSWORD_SED/g" /opt/upload/src/Resource/propel/connection/propel.php
 

@@ -43,6 +43,7 @@ Environment variables
 - PG_HOST - PostgreSQL host. Required.
 - PG_PORT - PostgreSQL port. Default value is 5432.
 - PG_DATABASE - PostgreSQL database name. Required.
+- PG_SCHEMA - PostgreSQL database schema. Default is "public".
 - PG_USER - PostgreSQL user name. Required.
 - PG_PASSWORD - PostgreSQL user password. Required.
 
